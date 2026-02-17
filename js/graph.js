@@ -121,8 +121,8 @@ PG.Graph = (function () {
     const { maxX, maxY, minY, mode } = PG.state;
 
     ctx.save();
-    ctx.strokeStyle = '#ecf0f1';
-    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = '#b2bec3';
+    ctx.lineWidth = 0.7;
 
     if (mode === 'quantitative') {
       // Vertical grid lines
@@ -192,8 +192,8 @@ PG.Graph = (function () {
 
     // Tick marks & labels
     if (mode === 'quantitative') {
-      ctx.font = '10px "Segoe UI", system-ui, sans-serif';
-      ctx.fillStyle = '#636e72';
+      ctx.font = '13px "Segoe UI", system-ui, sans-serif';
+      ctx.fillStyle = '#2d3436';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
 
@@ -203,10 +203,10 @@ PG.Graph = (function () {
         if (t === 0) return;
         const cx = toCanvasX(t);
         ctx.beginPath();
-        ctx.moveTo(cx, clampedXAxisY - 3);
-        ctx.lineTo(cx, clampedXAxisY + 3);
+        ctx.moveTo(cx, clampedXAxisY - 4);
+        ctx.lineTo(cx, clampedXAxisY + 4);
         ctx.stroke();
-        ctx.fillText(formatNum(t), cx, clampedXAxisY + 6);
+        ctx.fillText(formatNum(t), cx, clampedXAxisY + 8);
       });
 
       // Y ticks
@@ -217,16 +217,16 @@ PG.Graph = (function () {
         if (Math.abs(t) < 1e-10) return; // skip 0
         const cy = toCanvasY(t);
         ctx.beginPath();
-        ctx.moveTo(gx - 3, cy);
-        ctx.lineTo(gx + 3, cy);
+        ctx.moveTo(gx - 4, cy);
+        ctx.lineTo(gx + 4, cy);
         ctx.stroke();
-        ctx.fillText(formatNum(t), gx - 6, cy);
+        ctx.fillText(formatNum(t), gx - 8, cy);
       });
 
       // Origin label
       ctx.textAlign = 'right';
       ctx.textBaseline = 'top';
-      ctx.fillText('0', gx - 6, clampedXAxisY + 4);
+      ctx.fillText('0', gx - 8, clampedXAxisY + 6);
     }
 
     // Axis labels
