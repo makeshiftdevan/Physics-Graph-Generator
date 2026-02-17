@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Graph Generator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Physics Graph Generator</h1>
+    <p class="subtitle">Quadrant I &amp; IV &mdash; Interactive function plotter for physics</p>
+  </header>
+
+  <div class="app-container">
+    <!-- ======================== CONTROLS PANEL ======================== -->
+    <aside id="controls" class="controls-panel">
+
+      <!-- Axis Labels -->
+      <section class="control-group">
+        <h2>Axis Labels</h2>
+        <label>X-Axis <input type="text" id="xLabel" value="Time (s)" /></label>
+        <label>Y-Axis <input type="text" id="yLabel" value="Velocity (m/s)" /></label>
+      </section>
+
+      <!-- Mode Toggle -->
+      <section class="control-group">
+        <h2>Mode</h2>
+        <div class="toggle-group">
+          <button id="btnQualitative" class="toggle-btn active">Qualitative</button>
+          <button id="btnQuantitative" class="toggle-btn">Quantitative</button>
+        </div>
+        <div id="quantControls" class="quant-controls hidden">
+          <label>Max X <input type="number" id="maxX" value="10" min="0.1" step="any" /></label>
+          <label>Max Y <input type="number" id="maxY" value="10" min="0.1" step="any" /></label>
+          <label>Min Y <input type="number" id="minY" value="-10" step="any" /></label>
+        </div>
+      </section>
+
+      <!-- Segments -->
+      <section class="control-group">
+        <h2>Segments <button id="btnAddSegment" class="btn-small">+ Add</button></h2>
+        <div id="segmentList" class="segment-list"></div>
+      </section>
+
+      <!-- Advanced Mode -->
+      <section class="control-group">
+        <h2>
+          Advanced
+          <button id="btnToggleAdvanced" class="btn-small">Show</button>
+        </h2>
+        <div id="advancedPanel" class="advanced-panel hidden">
+          <p class="help-text">Select a segment above, then set its slope or integral value.</p>
+          <div class="adv-row">
+            <label>
+              <input type="radio" name="advMode" value="slope" checked /> Slope (constant)
+            </label>
+            <label>
+              <input type="radio" name="advMode" value="integral" /> Integral (area)
+            </label>
+          </div>
+          <label>Value <input type="number" id="advValue" value="1" step="any" /></label>
+          <button id="btnAdvApply" class="btn-primary">Apply</button>
+        </div>
+      </section>
+
+      <!-- Graph Options -->
+      <section class="control-group">
+        <h2>Options</h2>
+        <label class="checkbox-label">
+          <input type="checkbox" id="chkGrid" checked /> Show grid
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="chkSnapContinuous" checked /> Continuous segments
+        </label>
+        <button id="btnExport" class="btn-primary" style="margin-top:8px">Export as PNG</button>
+      </section>
+    </aside>
+
+    <!-- ======================== GRAPH AREA ======================== -->
+    <main class="graph-area">
+      <canvas id="graphCanvas"></canvas>
+      <div id="tooltip" class="tooltip hidden"></div>
+      <div id="editOverlay" class="edit-overlay hidden">
+        <span id="editOverlayText"></span>
+        <select id="editOverlaySelect"></select>
+        <button id="editOverlayApply" class="btn-small">Apply</button>
+        <button id="editOverlayCancel" class="btn-small btn-cancel">Cancel</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/relationships.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/advanced.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
