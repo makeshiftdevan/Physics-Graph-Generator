@@ -234,7 +234,7 @@ PG.Graph = (function () {
     ctx.font = 'bold 13px "Segoe UI", system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillText(xLabel, gx + gw / 2, gy + gh + 28);
+    ctx.fillText(xLabel, gx + gw / 2, gy + gh + 16);
 
     ctx.save();
     ctx.translate(16, gy + gh / 2);
@@ -358,6 +358,52 @@ PG.Graph = (function () {
     });
   }
 
+  /* ========== draw data points ========== */
+
+  function drawDataPoints() {
+    const pts = PG.state.dataPoints;
+    if (!pts || pts.length === 0) return;
+    const { maxX, maxY, minY, mode } = PG.state;
+
+    ctx.save();
+
+    // Clip to graph area
+    ctx.beginPath();
+    ctx.rect(gx - 1, gy - 1, gw + 2, gh + 2);
+    ctx.clip();
+
+    const radius = 5;
+
+    pts.forEach((pt, idx) => {
+      const cx = toCanvasX(pt.x);
+      const cy = toCanvasY(pt.y);
+
+      // Filled dot
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#e17055';
+      ctx.fill();
+      ctx.strokeStyle = '#d63031';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Label in quantitative mode
+      if (mode === 'quantitative') {
+        ctx.font = '10px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#2d3436';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(
+          `(${formatNum(pt.x)}, ${formatNum(pt.y)})`,
+          cx + radius + 3,
+          cy - radius
+        );
+      }
+    });
+
+    ctx.restore();
+  }
+
   /* ========== highlight region (for editor) ========== */
 
   function drawHighlight(x0, x1) {
@@ -381,6 +427,7 @@ PG.Graph = (function () {
     drawGrid();
     drawAxes();
     drawSegments();
+    drawDataPoints();
     // Editor highlight
     if (PG.Editor && PG.Editor.highlightRange) {
       const hr = PG.Editor.highlightRange;

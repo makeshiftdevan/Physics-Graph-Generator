@@ -20,6 +20,8 @@ PG.state = {
   continuous: true,         // enforce segment continuity
   selectedSegment: null,    // index or null
   segments: [],
+  dataPoints: [],           // [{ x, y }] standalone plotted points
+  plotPointsMode: false,    // when true, clicks place data points
 };
 
 /* ========== UI helpers (PG.UI) ========== */
@@ -190,6 +192,37 @@ PG.UI = (function () {
     }
   }
 
+  /* ---------- data points list ---------- */
+
+  function refreshDataPoints() {
+    const container = document.getElementById('dataPointsList');
+    if (!container) return;
+    container.innerHTML = '';
+
+    PG.state.dataPoints.forEach((pt, idx) => {
+      const row = document.createElement('div');
+      row.className = 'dp-row';
+      const label = PG.state.mode === 'quantitative'
+        ? `(${parseFloat(pt.x.toPrecision(4))}, ${parseFloat(pt.y.toPrecision(4))})`
+        : `Point ${idx + 1}`;
+      row.innerHTML = `
+        <span class="dp-label">${label}</span>
+        <button class="seg-remove dp-remove" data-idx="${idx}" title="Remove point">&times;</button>
+      `;
+      container.appendChild(row);
+    });
+
+    // Bind remove buttons
+    container.querySelectorAll('.dp-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.idx);
+        PG.state.dataPoints.splice(idx, 1);
+        refreshDataPoints();
+        PG.Graph.render();
+      });
+    });
+  }
+
   /* ---------- init ---------- */
 
   function init() {
@@ -245,6 +278,25 @@ PG.UI = (function () {
     $('chkSnapContinuous').addEventListener('change', () => {
       PG.state.continuous = $('chkSnapContinuous').checked;
       if (PG.state.continuous) enforceContinuity();
+      PG.Graph.render();
+    });
+
+    // Data points mode toggle
+    $('btnPlotPointsOff').addEventListener('click', () => {
+      PG.state.plotPointsMode = false;
+      $('btnPlotPointsOff').classList.add('active');
+      $('btnPlotPointsOn').classList.remove('active');
+      document.getElementById('graphCanvas').style.cursor = 'crosshair';
+    });
+    $('btnPlotPointsOn').addEventListener('click', () => {
+      PG.state.plotPointsMode = true;
+      $('btnPlotPointsOn').classList.add('active');
+      $('btnPlotPointsOff').classList.remove('active');
+      document.getElementById('graphCanvas').style.cursor = 'copy';
+    });
+    $('btnClearPoints').addEventListener('click', () => {
+      PG.state.dataPoints = [];
+      refreshDataPoints();
       PG.Graph.render();
     });
 
@@ -306,7 +358,7 @@ PG.UI = (function () {
     PG.Graph.render();
   }
 
-  return { init, refreshSegmentList, enforceContinuity };
+  return { init, refreshSegmentList, enforceContinuity, refreshDataPoints };
 })();
 
 /* ========== Boot ========== */

@@ -46,6 +46,16 @@ PG.Editor = (function () {
     if (!isInsideGraph(cx, cy)) return;
 
     const px = PG.Graph.toPhysX(cx);
+    const py = PG.Graph.toPhysY(cy);
+
+    // Data point placement mode
+    if (PG.state.plotPointsMode) {
+      PG.state.dataPoints.push({ x: px, y: py });
+      if (PG.UI.refreshDataPoints) PG.UI.refreshDataPoints();
+      PG.Graph.render();
+      return;
+    }
+
     isDragging = true;
     dragStartX = px;
     dragCurrentX = px;
