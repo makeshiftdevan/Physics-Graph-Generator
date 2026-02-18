@@ -387,18 +387,6 @@ PG.Graph = (function () {
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      // Label in quantitative mode
-      if (mode === 'quantitative') {
-        ctx.font = '10px "Segoe UI", system-ui, sans-serif';
-        ctx.fillStyle = '#2d3436';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText(
-          `(${formatNum(pt.x)}, ${formatNum(pt.y)})`,
-          cx + radius + 3,
-          cy - radius
-        );
-      }
     });
 
     ctx.restore();
