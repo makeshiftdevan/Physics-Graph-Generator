@@ -316,5 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
   PG.Graph.init(canvas);
   PG.Editor.init(canvas);
   PG.Advanced.init();
+  PG.DrawFit.init(canvas);
   PG.UI.init();
 });

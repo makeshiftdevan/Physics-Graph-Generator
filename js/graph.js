@@ -386,6 +386,10 @@ PG.Graph = (function () {
       const hr = PG.Editor.highlightRange;
       drawHighlight(hr.x0, hr.x1);
     }
+    // Freehand draw overlay
+    if (PG.DrawFit && PG.DrawFit.isActive()) {
+      PG.DrawFit.drawOverlay(ctx);
+    }
   }
 
   /* ========== export ========== */

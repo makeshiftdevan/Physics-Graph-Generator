@@ -250,6 +250,27 @@ header .subtitle { font-size: 0.85rem; color: var(--text-dim); margin-top: 2px; 
   margin-bottom: 6px;
 }
 
+/* ===== Draw Shape ===== */
+.adv-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 10px 0 8px;
+}
+.adv-subheading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.draw-btn { margin-top: 6px; }
+.draw-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
 /* Checkbox */
 .checkbox-label {
   flex-direction: row !important;

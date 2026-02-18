@@ -41,6 +41,7 @@ PG.Editor = (function () {
   /* ---------- mouse handlers ---------- */
 
   function onMouseDown(e) {
+    if (PG.DrawFit && PG.DrawFit.isActive()) return; // yield to draw mode
     const { cx, cy } = canvasCoords(e);
     if (!isInsideGraph(cx, cy)) return;
 
@@ -59,6 +60,7 @@ PG.Editor = (function () {
   }
 
   function onMouseMove(e) {
+    if (PG.DrawFit && PG.DrawFit.isActive()) return;
     const { cx, cy } = canvasCoords(e);
 
     // Tooltip
@@ -88,6 +90,7 @@ PG.Editor = (function () {
   }
 
   function onMouseUp(e) {
+    if (PG.DrawFit && PG.DrawFit.isActive()) return;
     if (!isDragging) return;
     isDragging = false;
 

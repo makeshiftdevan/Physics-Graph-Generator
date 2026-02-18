@@ -61,6 +61,31 @@
           </div>
           <label>Value <input type="number" id="advValue" value="1" step="any" /></label>
           <button id="btnAdvApply" class="btn-primary">Apply</button>
+
+          <hr class="adv-divider" />
+
+          <!-- Draw Shape -->
+          <h3 class="adv-subheading">Draw Shape</h3>
+          <p class="help-text">Draw a curve on the graph with your mouse or finger. It will be fitted to the best-matching relationship.</p>
+          <div id="drawIdle">
+            <label>Fit into
+              <select id="drawSegCount">
+                <option value="1">1 segment</option>
+                <option value="2">2 segments</option>
+                <option value="3">3 segments</option>
+                <option value="auto" selected>Auto</option>
+              </select>
+            </label>
+            <button id="btnStartDraw" class="btn-primary draw-btn">Start Drawing</button>
+          </div>
+          <div id="drawActive" class="hidden">
+            <div class="draw-status">
+              <span id="drawPointCount">0 points</span>
+              <button id="btnClearDraw" class="btn-small btn-cancel">Clear</button>
+            </div>
+            <button id="btnFitDraw" class="btn-primary draw-btn">Fit &amp; Apply</button>
+            <button id="btnCancelDraw" class="btn-small btn-cancel" style="width:100%;margin-top:4px">Cancel</button>
+          </div>
         </div>
       </section>
 
@@ -94,6 +119,7 @@
   <script src="js/graph.js"></script>
   <script src="js/editor.js"></script>
   <script src="js/advanced.js"></script>
+  <script src="js/drawfit.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
